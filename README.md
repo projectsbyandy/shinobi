@@ -8,7 +8,7 @@
 
 2. Docker Setup for SQL Server Edge
       - docker pull mcr.microsoft.com/azure-sql-edge
-      - docker run -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Andy123!’-p 1433:1433 --name sqlserver -d mcr.microsoft.com/azure-sql-edge
+      - docker run -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=<selected password>’-p 1433:1433 --name sqlserver -d mcr.microsoft.com/azure-sql-edge
       - Test using docker ps -a
          - azure-sql-edge will be listed
 
@@ -16,7 +16,7 @@
 - New Connection
     - Server - localhost
     - Username - sa
-    - Password - Andy123!
+    - Password - <selected password>
     - Name - SqlServerEdgeDocker
     - Press Connect and you should be presented with the status page
 
@@ -35,6 +35,15 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 Scaffold
 Browse into the project directory
 dotnet ef dbcontext scaffold "Server=localhost; Initial Catalog=shinobi; user=sa;Password=<insert here>;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models
+
+Create a appsettings.local.json with the following entry
+```
+{
+  "SqlConnectionDetails": {
+    "Password": "<your password>"
+  }
+}
+```
 
 ## Troubleshooting
 
