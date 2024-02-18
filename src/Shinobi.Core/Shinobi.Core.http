@@ -1,0 +1,6 @@
+@Shinobi.Core_HostAddress = http://localhost:5100
+
+GET {{Shinobi.Core_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
