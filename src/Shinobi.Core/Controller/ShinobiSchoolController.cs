@@ -23,6 +23,8 @@ public class ShinobiSchoolController : ControllerBase
         {
             personResponse.IsSuccess = true;
             personResponse.Persons = _shinobiContext.Persons.ToList();
+            personResponse.Skills = _shinobiContext.Skills.First();
+            personResponse.Message = "Success";
         }
         catch (Exception ex)
         {

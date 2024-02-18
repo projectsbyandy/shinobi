@@ -1,6 +1,6 @@
 ﻿namespace Shinobi.Core.Models;
 
-public partial class Skill
+public class Skills
 {
     public int? Class { get; set; }
 

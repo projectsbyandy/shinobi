@@ -4,7 +4,7 @@ using Shinobi.Core.Models.Config;
 
 namespace Shinobi.Core.Data;
 
-public partial class ShinobiContext : DbContext
+public class ShinobiContext : DbContext
 {
     private readonly SqlConnectionDetails _sqlConnectionDetails;
     
@@ -21,38 +21,27 @@ public partial class ShinobiContext : DbContext
 
     public virtual DbSet<Person> Persons { get; set; }
 
-    public virtual DbSet<Skill> Skills { get; set; }
+    public virtual DbSet<Skills> Skills { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer($"Server={_sqlConnectionDetails.Server}; Initial Catalog={_sqlConnectionDetails.Catalog}; " +
-                                       $"user={_sqlConnectionDetails.UserName};Password={_sqlConnectionDetails.Password};TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer($"Server={_sqlConnectionDetails.Server}; " +
+                                       $"Initial Catalog={_sqlConnectionDetails.Catalog}; " +
+                                       $"user={_sqlConnectionDetails.UserName};" +
+                                       $"Password={_sqlConnectionDetails.Password};" +
+                                       $"TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Person>(entity =>
         {
             entity.HasNoKey();
-
-            entity.Property(e => e.FirstName)
-                .HasMaxLength(255)
-                .IsUnicode(false);
-            entity.Property(e => e.LastName)
-                .HasMaxLength(255)
-                .IsUnicode(false);
-            entity.Property(e => e.PersonId).HasColumnName("PersonID");
         });
-
-        modelBuilder.Entity<Skill>(entity =>
+        
+        modelBuilder.Entity<Skills>(entity =>
         {
             entity.HasNoKey();
-
-            entity.Property(e => e.Details)
-                .HasMaxLength(255)
-                .IsUnicode(false);
         });
-
-        OnModelCreatingPartial(modelBuilder);
+        
+        base.OnModelCreating(modelBuilder);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
