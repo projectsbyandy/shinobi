@@ -1,4 +1,4 @@
-namespace Shinobi.Tests.Controller;
+namespace Shinobi.Tests.Controllers;
 
 public class ShinobiSchoolControllerTests
 {

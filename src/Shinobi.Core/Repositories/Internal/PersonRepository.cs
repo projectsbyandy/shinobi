@@ -13,10 +13,10 @@ public class PersonRepository : IPersonRepository
         _shinobiContext = shinobiContext;
     }
 
-    public IEnumerable<Person> Get()
+    public IEnumerable<Person>? Get()
     {
         if (_shinobiContext.Persons.IsNullOrEmpty())
-            return Enumerable.Empty<Person>();
+            return null;
 
         return _shinobiContext.Persons;
     }

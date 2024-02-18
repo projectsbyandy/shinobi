@@ -17,7 +17,7 @@ public class ShinobiSchoolController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult Get()
+    public IActionResult GetAll()
     {
         var personResponse = new PersonResponse()
         {
