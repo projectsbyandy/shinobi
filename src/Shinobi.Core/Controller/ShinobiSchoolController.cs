@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Shinobi.Core.Data;
+using Microsoft.IdentityModel.Tokens;
 using Shinobi.Core.Models;
+using Shinobi.Core.Repositories;
 
 namespace Shinobi.Core.Controller;
 
@@ -8,29 +9,33 @@ namespace Shinobi.Core.Controller;
 [ApiController]
 public class ShinobiSchoolController : ControllerBase
 {
-    private readonly ShinobiContext _shinobiContext;
-
-    public ShinobiSchoolController(ShinobiContext shinobiContext)
+    private readonly IPersonRepository _personRepository;
+    
+    public ShinobiSchoolController(IPersonRepository personRepository)
     {
-        _shinobiContext = shinobiContext;
+        _personRepository = personRepository;
+    }
+
+    [HttpGet]
+    public IActionResult Get()
+    {
+        var personResponse = new PersonResponse()
+        {
+            Persons = _personRepository.Get()
+        };
+
+        return personResponse.Persons.IsNullOrEmpty()
+            ? NotFound("No Ninjas found")
+            : Ok(personResponse.Persons);    
     }
     
-    [HttpGet]
-    public PersonResponse Get()
+    [HttpGet("{personId}")]
+    public IActionResult Get(int personId)
     {
-        var personResponse = new PersonResponse();
-        try
-        {
-            personResponse.IsSuccess = true;
-            personResponse.Persons = _shinobiContext.Persons.ToList();
-            personResponse.Skills = _shinobiContext.Skills.First();
-            personResponse.Message = "Success";
-        }
-        catch (Exception ex)
-        {
-            personResponse.IsSuccess = false;
-            personResponse.Message = ex.Message;
-        }
-        return personResponse;
+        var locatedPerson = _personRepository.Get(personId);
+
+        return locatedPerson is null
+            ? NotFound($"Ninja with {personId} not found")
+            : Ok(locatedPerson);    
     }
 }
