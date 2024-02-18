@@ -52,3 +52,6 @@ VALUES
     (2, 'Daggers'),
     (3, 'Backflip')
 GO
+
+Select * from Persons
+Select * from Skills
