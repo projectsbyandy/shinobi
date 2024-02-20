@@ -1,6 +1,12 @@
 # Project Shinobi
+This project demonstrates the use of
+- WebAPI
+- Entity Framework ORM
+- Mocking DBContext for Unit testing
 
 ## Pre-Req
+
+The following instructions detail the pre-requisites for a Mac setup. If you are you on Windows, install SqlServer and skip to the Create Project section
 
 1. Download Azure Data Studio
 	https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio?tabs=win-install%2Cwin-user-install%2Credhat-install%2CmacOS-uninstall%2Credhat-uninstall
@@ -44,6 +50,7 @@ Create a appsettings.local.json with the following entry
   }
 }
 ```
+## Run the Setup SQL script to create the mandatory tables
 
 ## Troubleshooting
 
