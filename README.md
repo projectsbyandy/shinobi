@@ -3,10 +3,11 @@ This project demonstrates the use of
 - WebAPI
 - Entity Framework ORM
 - Mocking DBContext for Unit testing
+- Layered Configuration handling
 
 ## Pre-Req
 
-The following instructions detail the pre-requisites for a Mac setup. If you are you on Windows, install SqlServer and skip to the Create Project section
+The following instructions detail the pre-requisites for a Mac setup. If you are using Windows, install SqlServer and skip to the Create Project section
 
 1. Download Azure Data Studio
 	https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio?tabs=win-install%2Cwin-user-install%2Credhat-install%2CmacOS-uninstall%2Credhat-uninstall
@@ -59,6 +60,7 @@ Tools directory '/Users/andrewchang/.dotnet/tools' is not currently on the PATH 
 If you are using zsh, you can add it to your profile by running the following command:
 
 cat << \EOF >> ~/.zprofile
+
 # Add .NET Core SDK tools
 export PATH="$PATH:/Users/andrewchang/.dotnet/tools"
 EOF
