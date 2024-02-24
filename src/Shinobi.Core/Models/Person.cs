@@ -1,8 +1,11 @@
-﻿namespace Shinobi.Core.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shinobi.Core.Models;
 
 public class Person
 {
-    public int? PersonId { get; set; }
+    [Key]
+    public int PersonId { get; set; }
 
     public string? LastName { get; set; }
 

@@ -13,19 +13,29 @@ public class PersonRepository : IPersonRepository
         _shinobiContext = shinobiContext;
     }
 
-    public IEnumerable<Person>? Get()
+    public IList<Person>? Get()
     {
         if (_shinobiContext.Persons.IsNullOrEmpty())
             return null;
 
-        return _shinobiContext.Persons;
+        return _shinobiContext.Persons.ToList();
     }
     
     public Person? Get(int personId)
-    {
-        if (_shinobiContext.Persons.IsNullOrEmpty())
-            return null;
+    { 
+        var person = _shinobiContext.Persons.ToList().FirstOrDefault(person => person.PersonId == personId) ?? null;
 
-        return _shinobiContext.Persons.ToList().Find(person => person.PersonId == personId);
+        return person;
+    }
+
+    public bool Post(Person person)
+    {
+        if (Get(person.PersonId) is not null)
+            return false;
+        
+        var test = _shinobiContext.Persons.Add(person);
+        _shinobiContext.SaveChanges();
+
+        return true;
     }
 }

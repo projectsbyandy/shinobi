@@ -4,6 +4,7 @@ namespace Shinobi.Core.Repositories;
 
 public interface IPersonRepository
 {
-    IEnumerable<Person>? Get();
+    IList<Person>? Get();
     Person? Get(int personId);
+    bool Post(Person person);
 }

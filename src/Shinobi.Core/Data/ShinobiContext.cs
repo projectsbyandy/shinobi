@@ -31,7 +31,6 @@ public class ShinobiContext : DbContext
     {
         modelBuilder.Entity<Person>(entity =>
         {
-            entity.HasNoKey();
             entity.Property(e => e.FirstName)
                 .HasMaxLength(255)
                 .IsUnicode(false);
