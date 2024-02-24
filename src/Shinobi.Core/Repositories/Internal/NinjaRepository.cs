@@ -13,29 +13,21 @@ public class NinjaRepository : INinjaRepository
         _shinobiContext = shinobiContext;
     }
 
-    public IList<Ninja>? Get()
+    public IList<Ninja> Get()
     {
-        if (_shinobiContext.Ninja.IsNullOrEmpty())
-            return null;
-
-        return _shinobiContext.Ninja.ToList();
+        return _shinobiContext.Ninja.IsNullOrEmpty() 
+            ? Enumerable.Empty<Ninja>().ToList() 
+            : _shinobiContext.Ninja.ToList();
     }
     
     public Ninja? Get(int id)
     { 
-        var ninja = _shinobiContext.Ninja.ToList().FirstOrDefault(ninja => ninja.Id == id) ?? null;
-
-        return ninja;
+        return _shinobiContext.Ninja.ToList().FirstOrDefault(ninja => ninja.Id == id) ?? null;;
     }
 
-    public bool Register(Ninja ninja)
+    public void Register(Ninja ninja)
     {
-        if (Get(ninja.Id) is not null)
-            return false;
-        
-        var test = _shinobiContext.Ninja.Add(ninja);
+         _shinobiContext.Ninja.Add(ninja);
         _shinobiContext.SaveChanges();
-
-        return true;
     }
 }

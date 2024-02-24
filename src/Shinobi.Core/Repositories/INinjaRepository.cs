@@ -4,7 +4,7 @@ namespace Shinobi.Core.Repositories;
 
 public interface INinjaRepository
 {
-    IList<Ninja>? Get();
+    IList<Ninja> Get();
     Ninja? Get(int id);
-    bool Register(Ninja ninja);
+    void Register(Ninja ninja);
 }

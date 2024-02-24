@@ -32,10 +32,10 @@ public class NinjaRepositoryTests
         _sut = INinjaRepositoryMock.GetMock(new NinjaMockOptions() { ReturnSingle = true});
 
         // When
-        var people= _sut?.Get();
+        var people= _sut.Get();
 
         // Then
-        people?.Should().BeNull();
+        people.Should().BeEmpty();
     }
     
     [Test]
@@ -45,7 +45,7 @@ public class NinjaRepositoryTests
         _sut = INinjaRepositoryMock.GetMock(new NinjaMockOptions() { ReturnSingle = true});
 
         // When
-        var people= _sut?.Get(1);
+        var people= _sut.Get(1);
 
         // Then
         people?.Id.Should().Be(1);
@@ -58,7 +58,7 @@ public class NinjaRepositoryTests
         _sut = INinjaRepositoryMock.GetMock(new NinjaMockOptions() { ReturnSingle = true});
 
         // When
-        var people= _sut?.Get(123);
+        var people= _sut.Get(123);
 
         // Then
         people?.Should().BeNull();

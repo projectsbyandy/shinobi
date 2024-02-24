@@ -9,7 +9,8 @@ public class Skill
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [SwaggerSchema(ReadOnly = true)]
-    public int? Level { get; set; }
+    public int Level { get; set; }
 
-    public string? Details { get; set; }
+    [Required]
+    public string Details { get; set; } = string.Empty;
 }

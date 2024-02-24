@@ -11,8 +11,12 @@ public class Ninja
     [SwaggerSchema(ReadOnly = true)]
     public int Id { get; set; }
 
-    public string? LastName { get; set; }
-
-    public string? FirstName { get; set; }
-    public int Level { get; set; }
+    [Required]
+    public string LastName { get; set; } = string.Empty;
+    
+    [Required]
+    public string FirstName { get; set; } = string.Empty;
+    
+    [Required]
+    public int? Level { get; set; }
 }

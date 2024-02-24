@@ -1,4 +1,5 @@
 using Ardalis.GuardClauses;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Shinobi.Core.Models;
@@ -24,7 +25,7 @@ public class ShinobiSchoolController : ControllerBase
     {
         var people = _ninjaRepository.Get();
 
-        if (people.IsNullOrEmpty())
+        if (people.Any() is false)
             return NotFound("No Ninjas found");
 
         return Ok(new NinjaResponse()
@@ -46,19 +47,24 @@ public class ShinobiSchoolController : ControllerBase
     [HttpPost]
     public IActionResult Register(Ninja ninja)
     {
-        bool saved;
+        if (_ninjaRepository.Get().Any(existing
+            => existing.FirstName.Equals(ninja.FirstName) 
+               && existing.LastName.Equals(ninja.LastName)))
+        {
+            return Conflict($"Ninja with FirstName: {ninja.FirstName} and LastName: {ninja.LastName} already exists");
+        }
+        
         try
         { 
-            saved = _ninjaRepository.Register(ninja);
+            _ninjaRepository.Register(ninja);
         }
         catch (Exception ex)
         {
             _logger.LogError("Problem registering Ninja due to {Ex}", ex);
             return StatusCode(StatusCodes.Status500InternalServerError, "Unable to Register Ninja");
         }
-        
-        return saved
-            ? CreatedAtAction(nameof(Get), new { ninjaId = ninja.Id}, ninja)
-            : Conflict($"Ninja with Id: {ninja.Id} already exists");
+
+        return CreatedAtAction(nameof(Get), 
+            new { ninjaId = ninja.Id }, ninja);
     }
 }
