@@ -1,6 +1,6 @@
 namespace Shinobi.Tests.MockHelpers;
 
-public class PersonMockOptions
+public class NinjaMockOptions
 {
     public bool ReturnEmpty { get; set; }
     public bool ReturnSingle { get; set; }

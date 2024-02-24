@@ -19,9 +19,9 @@ public class ShinobiContext : DbContext
         _sqlConnectionDetails = sqlConnectionDetails;
     }
 
-    public virtual DbSet<Person> Persons { get; set; }
+    public virtual DbSet<Ninja> Ninja { get; set; }
 
-    public virtual DbSet<Skills> Skills { get; set; }
+    public virtual DbSet<Skill> Skill { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer($"Server={_sqlConnectionDetails.Server}; Initial Catalog={_sqlConnectionDetails.Catalog}; " +
@@ -29,7 +29,7 @@ public class ShinobiContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Person>(entity =>
+        modelBuilder.Entity<Ninja>(entity =>
         {
             entity.Property(e => e.FirstName)
                 .HasMaxLength(255)
@@ -37,13 +37,11 @@ public class ShinobiContext : DbContext
             entity.Property(e => e.LastName)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.PersonId).HasColumnName("PersonID");
+            entity.Property(e => e.Id).HasColumnName("ID");
         });
         
-        modelBuilder.Entity<Skills>(entity =>
+        modelBuilder.Entity<Skill>(entity =>
         {
-            entity.HasNoKey();
-        
             entity.Property(e => e.Details)
                 .HasMaxLength(255)
                 .IsUnicode(false);

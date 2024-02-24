@@ -13,45 +13,45 @@ GO
 use shinobi
     GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Persons]') AND type in (N'U'))
-DROP TABLE [dbo].[Persons]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ninja]') AND type in (N'U'))
+DROP TABLE [dbo].[Ninja]
 GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Skills]') AND type in (N'U'))
-DROP TABLE [dbo].[Skills]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Skill]') AND type in (N'U'))
+DROP TABLE [dbo].[Skill]
 GO
 
-CREATE TABLE Persons
+CREATE TABLE Ninja
 (
-    PersonID int,
+    ID int PRIMARY KEY  IDENTITY(1, 1),
     LastName varchar(255),
     FirstName varchar(255),
-    Class int
+    Level int
 );
 GO
 
-INSERT INTO Persons
-    (PersonID, LastName, FirstName, Class)
+INSERT INTO Ninja
+    (LastName, FirstName, Level)
 VALUES
-    (1, 'Trout', 'Fisher', 3),
-    (2, 'Lemming', 'Ed', 2),
-    (3, 'Plod', 'Flying', 1)
+    ('Trout', 'Fisher', 3),
+    ('Lemming', 'Ed', 2),
+    ('Plod', 'Flying', 1)
 GO
 
-CREATE TABLE Skills
+CREATE TABLE Skill
 (
-    Class int,
+    Level int PRIMARY KEY  IDENTITY(1, 1),
     Details varchar(255)
 );
 GO
 
-INSERT INTO Skills
-    (Class, Details)
+INSERT INTO Skill
+    (Details)
 VALUES
-    (1, 'Flying Monkey'),
-    (2, 'Daggers'),
-    (3, 'Backflip')
+    ('Flying Monkey'),
+    ('Daggers'),
+    ('Backflip')
 GO
 
-Select * from Persons
-Select * from Skills
+Select * from Ninja
+Select * from Skill

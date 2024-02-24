@@ -4,6 +4,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shinobi.Core", "Shinobi.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shinobi.Tests", "Shinobi.Tests\Shinobi.Tests.csproj", "{5E89C980-8ED7-49C6-960B-FE5280DCC5C1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlSetup", "SqlSetup", "{8B635391-8F9F-48A0-83F5-E00FA173C08A}"
+	ProjectSection(SolutionItems) = preProject
+		..\sql\DatabaseSetupScripts.sql = ..\sql\DatabaseSetupScripts.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

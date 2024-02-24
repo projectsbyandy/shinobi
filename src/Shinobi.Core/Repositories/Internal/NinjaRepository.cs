@@ -1,0 +1,41 @@
+using Microsoft.IdentityModel.Tokens;
+using Shinobi.Core.Data;
+using Shinobi.Core.Models;
+
+namespace Shinobi.Core.Repositories.Internal;
+
+public class NinjaRepository : INinjaRepository
+{
+    private readonly ShinobiContext _shinobiContext;
+
+    public NinjaRepository(ShinobiContext shinobiContext)
+    {
+        _shinobiContext = shinobiContext;
+    }
+
+    public IList<Ninja>? Get()
+    {
+        if (_shinobiContext.Ninja.IsNullOrEmpty())
+            return null;
+
+        return _shinobiContext.Ninja.ToList();
+    }
+    
+    public Ninja? Get(int id)
+    { 
+        var ninja = _shinobiContext.Ninja.ToList().FirstOrDefault(ninja => ninja.Id == id) ?? null;
+
+        return ninja;
+    }
+
+    public bool Register(Ninja ninja)
+    {
+        if (Get(ninja.Id) is not null)
+            return false;
+        
+        var test = _shinobiContext.Ninja.Add(ninja);
+        _shinobiContext.SaveChanges();
+
+        return true;
+    }
+}

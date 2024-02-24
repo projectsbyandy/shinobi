@@ -10,55 +10,55 @@ namespace Shinobi.Core.Controller;
 [ApiController]
 public class ShinobiSchoolController : ControllerBase
 {
-    private readonly IPersonRepository _personRepository;
+    private readonly INinjaRepository _ninjaRepository;
     private readonly ILogger<ShinobiSchoolController> _logger;
     
-    public ShinobiSchoolController(IPersonRepository personRepository, ILogger<ShinobiSchoolController> logger)
+    public ShinobiSchoolController(INinjaRepository ninjaRepository, ILogger<ShinobiSchoolController> logger)
     {
-        _personRepository = personRepository;
+        _ninjaRepository = ninjaRepository;
         _logger = logger;
     }
 
     [HttpGet]
     public IActionResult GetAll()
     {
-        var people = _personRepository.Get();
+        var people = _ninjaRepository.Get();
 
         if (people.IsNullOrEmpty())
             return NotFound("No Ninjas found");
 
-        return Ok(new PersonResponse()
+        return Ok(new NinjaResponse()
         {
-            People = Guard.Against.Null(people)
+            Ninjas = Guard.Against.Null(people)
         });
     }
     
-    [HttpGet("{personId}")]
-    public IActionResult Get(int personId)
+    [HttpGet("{ninjaId}")]
+    public IActionResult Get(int ninjaId)
     {
-        var locatedPerson = _personRepository.Get(personId);
+        var locatedNinja = _ninjaRepository.Get(ninjaId);
 
-        return locatedPerson is null
-            ? NotFound($"Ninja with {personId} not found")
-            : Ok(locatedPerson);    
+        return locatedNinja is null
+            ? NotFound($"Ninja with {ninjaId} not found")
+            : Ok(locatedNinja);    
     }
     
     [HttpPost]
-    public IActionResult Create(Person person)
+    public IActionResult Register(Ninja ninja)
     {
         bool saved;
         try
         { 
-            saved = _personRepository.Post(person);
+            saved = _ninjaRepository.Register(ninja);
         }
         catch (Exception ex)
         {
-            _logger.LogError("Problem creating Person due to {Ex}", ex);
-            return StatusCode(StatusCodes.Status500InternalServerError, "Unable to Create Person");
+            _logger.LogError("Problem registering Ninja due to {Ex}", ex);
+            return StatusCode(StatusCodes.Status500InternalServerError, "Unable to Register Ninja");
         }
         
         return saved
-            ? CreatedAtAction(nameof(Get), new { personId = person.PersonId}, person)
-            : Conflict($"Person with Id: {person.PersonId} already exists");
+            ? CreatedAtAction(nameof(Get), new { ninjaId = ninja.Id}, ninja)
+            : Conflict($"Ninja with Id: {ninja.Id} already exists");
     }
 }

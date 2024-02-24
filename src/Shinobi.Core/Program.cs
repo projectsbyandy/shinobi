@@ -6,11 +6,14 @@ using Shinobi.Core.Repositories.Internal;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.EnableAnnotations();
+});
 var config = ConfigExtensions.GetConfiguration();
 builder.Services.AddConfigurationSupport(config);
 
-builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
+builder.Services.AddSingleton<INinjaRepository, NinjaRepository>();
 builder.Services.AddSingleton<ShinobiContext>();
 builder.Services.AddControllers();
 
