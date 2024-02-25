@@ -18,15 +18,18 @@ public class INinjaRepositoryMock
     {
         if (ninjaMockOptions.ReturnEmpty)
             return new List<Ninja>();
+
+        var count = ninjaMockOptions.ReturnSingle ? 1 : ninjaMockOptions.ReturnCount;
         
         List<Ninja> people = new();
-        for (var index = 1; index <= ninjaMockOptions.ReturnCount; index++)
+        for (var index = 1; index <= count; index++)
         {                
             people.Add(new Ninja()
             {
-                Id= new Random().Next(1, 100),
+                Id = new Random().Next(1, 100),
                 FirstName = $"John{index}",
-                LastName = "Doe"
+                LastName = "Doe",
+                Level = 3
             });
         }
         return people;

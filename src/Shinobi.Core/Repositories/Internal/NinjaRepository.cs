@@ -25,9 +25,15 @@ public class NinjaRepository : INinjaRepository
         return _shinobiContext.Ninja.ToList().FirstOrDefault(ninja => ninja.Id == id) ?? null;;
     }
 
-    public void Register(Ninja ninja)
+    public void Add(Ninja ninja)
+    { 
+        _shinobiContext.Ninja.Add(ninja);
+        _shinobiContext.SaveChanges();
+    }
+
+    public void Delete(int id)
     {
-         _shinobiContext.Ninja.Add(ninja);
+        _shinobiContext.Ninja.Remove(_shinobiContext.Ninja.Single(ninja => ninja.Id == id));
         _shinobiContext.SaveChanges();
     }
 }

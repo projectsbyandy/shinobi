@@ -1,7 +1,5 @@
 using Ardalis.GuardClauses;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Shinobi.Core.Models;
 using Shinobi.Core.Repositories;
 
@@ -34,29 +32,25 @@ public class ShinobiSchoolController : ControllerBase
         });
     }
     
-    [HttpGet("{ninjaId}")]
-    public IActionResult Get(int ninjaId)
+    [HttpGet("{id}")]
+    public IActionResult Get(int id)
     {
-        var locatedNinja = _ninjaRepository.Get(ninjaId);
+        var locatedNinja = _ninjaRepository.Get(id);
 
         return locatedNinja is null
-            ? NotFound($"Ninja with {ninjaId} not found")
+            ? NotFound($"Ninja with {id} not found")
             : Ok(locatedNinja);    
     }
     
     [HttpPost]
     public IActionResult Register(Ninja ninja)
     {
-        if (_ninjaRepository.Get().Any(existing
-            => existing.FirstName.Equals(ninja.FirstName) 
-               && existing.LastName.Equals(ninja.LastName)))
-        {
-            return Conflict($"Ninja with FirstName: {ninja.FirstName} and LastName: {ninja.LastName} already exists");
-        }
+        if (NinjaExists(ninja.FirstName, ninja.LastName))
+            return BadRequest($"Ninja with 'FirstName: {ninja.FirstName}' and 'LastName: {ninja.LastName}' already exists");
         
         try
         { 
-            _ninjaRepository.Register(ninja);
+            _ninjaRepository.Add(ninja);
         }
         catch (Exception ex)
         {
@@ -66,5 +60,25 @@ public class ShinobiSchoolController : ControllerBase
 
         return CreatedAtAction(nameof(Get), 
             new { ninjaId = ninja.Id }, ninja);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var ninja = _ninjaRepository.Get(id);
+        
+        if (ninja is null)
+            return NotFound($"Ninja with 'Id:{id}' does not exist");
+        
+        _ninjaRepository.Delete(ninja.Id);
+
+        return Ok("Deleted Successfully");
+    }
+
+    private bool NinjaExists(string firstName, string lastName)
+    {
+        return _ninjaRepository.Get().Any(existing
+            => existing.FirstName.Equals(firstName)
+               && existing.LastName.Equals(lastName));
     }
 }

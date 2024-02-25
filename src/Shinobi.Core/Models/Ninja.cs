@@ -4,7 +4,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Shinobi.Core.Models;
 
-public class Ninja
+public record Ninja
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
