@@ -75,10 +75,8 @@ public class NinjaRepositoryTests
     public void Verify_A_Ninja_Can_Be_Registered()
     {
         // Given
-        var ninja = new Ninja()
+        var ninja = new Ninja("Larry", "Peterson")
         {
-            FirstName = "Larry",
-            LastName = "Peterson",
             Level = 777
         };
         

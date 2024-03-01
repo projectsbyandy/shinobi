@@ -24,11 +24,9 @@ public class INinjaRepositoryMock
         List<Ninja> people = new();
         for (var index = 1; index <= count; index++)
         {                
-            people.Add(new Ninja()
+            people.Add(new Ninja($"John{index}","Doe")
             {
                 Id = new Random().Next(1, 100),
-                FirstName = $"John{index}",
-                LastName = "Doe",
                 Level = 3
             });
         }
