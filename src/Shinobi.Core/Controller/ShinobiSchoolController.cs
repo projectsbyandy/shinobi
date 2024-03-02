@@ -77,8 +77,13 @@ public class ShinobiSchoolController : ControllerBase
 
     private bool NinjaExists(string firstName, string lastName)
     {
-        return _ninjaRepository.Get().Any(existing
-            => existing.FirstName.Equals(firstName)
-               && existing.LastName.Equals(lastName));
+        var existingNinjas = _ninjaRepository.Get();
+        
+        if (existingNinjas.Any())
+            return _ninjaRepository.Get().Any(existing
+                => existing.FirstName.Equals(firstName)
+                   && existing.LastName.Equals(lastName));
+
+        return false;
     }
 }

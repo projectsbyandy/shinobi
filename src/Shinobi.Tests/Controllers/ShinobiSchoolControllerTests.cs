@@ -14,12 +14,23 @@ public class ShinobiSchoolControllerTests
     private ShinobiSchoolController? _sut;
     private Mock<INinjaRepository>? _repositoryMock;
     private IMock<ILogger<ShinobiSchoolController>>? _loggerMock;
-
+    private readonly Ninja _existingNinja = new Ninja("Robson", "Etchfield")
+    {
+        Id = 1,
+        Level = 12
+    };
+    
     [SetUp]
     public void Setup()
     {
         _repositoryMock = new Mock<INinjaRepository>();
         _loggerMock = new Mock<ILogger<ShinobiSchoolController>>();
+        
+        _repositoryMock?.Setup(repository => repository.Get()).Returns([]);
+        _repositoryMock?.Setup(repository => repository.Get(1)).Returns(
+            _existingNinja
+        );
+        _sut = new ShinobiSchoolController(_repositoryMock!.Object, _loggerMock!.Object);
     }
 
     #region GetAll Endpoint
@@ -60,11 +71,7 @@ public class ShinobiSchoolControllerTests
     [Test]
     public void Verify_All_Ninjas_Response_When_Empty()
     {
-        // Given
-        _repositoryMock?.Setup(repository => repository.Get()).Returns([]);
-        _sut = new ShinobiSchoolController(_repositoryMock!.Object, _loggerMock!.Object);
-
-        // When
+        // Given // When
         var response = _sut?.GetAll();
 
         // Then
@@ -83,17 +90,6 @@ public class ShinobiSchoolControllerTests
     public void Verify_Ninja_Can_Be_Retrieved()
     {
         // Given
-
-        var referenceNinja = new Ninja("Robson", "Etchfield")
-        {
-            Id = 1,
-            Level = 12
-        };
-        
-        _repositoryMock?.Setup(repository => repository.Get(1)).Returns(
-            referenceNinja
-        );
-        
         _sut = new ShinobiSchoolController(_repositoryMock!.Object, _loggerMock!.Object);
 
         // When
@@ -107,10 +103,10 @@ public class ShinobiSchoolControllerTests
         var ninja = okObjectResult?.Value as Ninja;
         ninja.Should().NotBeNull();
         
-        ninja?.Id.Should().Be(referenceNinja.Id);
-        ninja?.FirstName.Should().Be(referenceNinja.FirstName);
-        ninja?.LastName.Should().Be(referenceNinja.LastName);
-        ninja?.Level.Should().Be(referenceNinja.Level);
+        ninja?.Id.Should().Be(_existingNinja.Id);
+        ninja?.FirstName.Should().Be(_existingNinja.FirstName);
+        ninja?.LastName.Should().Be(_existingNinja.LastName);
+        ninja?.Level.Should().Be(_existingNinja.Level);
     }
     #endregion
 
@@ -118,15 +114,12 @@ public class ShinobiSchoolControllerTests
     public void Verify_Create_Ninja_Mandatory_Fields_Repository_DbUpdateException_Returns_Server_Error()
     {
         // Given
-        var referenceNinja = new Ninja("Throw", "DbException");
-        _repositoryMock?.Setup(repository => 
-            repository.Get()).Returns(new List<Ninja> { new Ninja("Simon", "Yam") });
         _repositoryMock?.Setup(repository => 
             repository.Add(It.IsAny<Ninja>())).Throws<DbUpdateException>();
         _sut = new ShinobiSchoolController(_repositoryMock!.Object, _loggerMock!.Object);
-
+        
         // When
-        var response = _sut.Register(referenceNinja);
+        var response = _sut?.Register(new Ninja("Emily", "Execept"));
 
         // Then
         response.Should().BeOfType<ObjectResult>();
@@ -140,16 +133,32 @@ public class ShinobiSchoolControllerTests
     public void Verify_Create_Ninja_Existing_Check_Returns_Bad_Request()
     {
         // Given
+        _repositoryMock?.Setup(repository => repository.Get()).Returns(new List<Ninja>()
+        {
+            _existingNinja
+        });
+        
+        _sut = new ShinobiSchoolController(_repositoryMock!.Object, _loggerMock!.Object);
+
+        // When
+        var response = _sut?.Register(_existingNinja);
+        
+        // Then
+        response.Should().BeOfType<BadRequestObjectResult>();
+        var badRequestObjectResult = response as BadRequestObjectResult;
+        
+        badRequestObjectResult?.Value.Should().Be($"Ninja with 'FirstName: {_existingNinja.FirstName}' and 'LastName: {_existingNinja.LastName}' already exists");
+    }
+    
+    [Test]
+    public void Verify_A_Ninja_Can_Be_Registered_Successfully_Ninja()
+    {
+        // Given
         var referenceNinja = new Ninja("Ted", "Boss")
         {
             Id = 1,
             Level = 12
         };
-        
-        _repositoryMock?.Setup(repository => repository.Get()).Returns(new List<Ninja>()
-        {
-            referenceNinja
-        });
         
         _sut = new ShinobiSchoolController(_repositoryMock!.Object, _loggerMock!.Object);
 
@@ -157,9 +166,10 @@ public class ShinobiSchoolControllerTests
         var response = _sut?.Register(referenceNinja);
         
         // Then
-        response.Should().BeOfType<BadRequestObjectResult>();
-        var badRequestObjectResult = response as BadRequestObjectResult;
-        
-        badRequestObjectResult?.Value.Should().Be($"Ninja with 'FirstName: {referenceNinja.FirstName}' and 'LastName: {referenceNinja.LastName}' already exists");
+        response.Should().BeOfType<CreatedAtActionResult>();
+        var createdAtActionResult = response as CreatedAtActionResult;
+
+        createdAtActionResult?.StatusCode.Should().Be(201);
+        createdAtActionResult?.Value.Should().Be(referenceNinja);
     }
 }
