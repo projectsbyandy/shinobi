@@ -2,12 +2,21 @@
 This project demonstrates the use of
 - WebAPI
 - Entity Framework ORM
+  - Use of SqlServer or In-Memory db
 - Mocking DBContext for Unit testing
 - Layered Configuration handling
 
 ## Pre-Req
 
-The following instructions detail the pre-requisites for a Mac setup. If you are using Windows, install SqlServer and skip to the Create Project section
+This project has the option of using a real SqlServer db or In-Memory DB. The default configuration is In-Memory. To change this options, override the option in appsettings
+
+```
+ "DbConfiguration": {
+    "UseMock": true
+  }
+```
+
+The following instructions detail the pre-requisites for a Mac setup. If you are using Windows, install SqlServer and skip to the Create Project section.
 
 1. Download Azure Data Studio
 	https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio?tabs=win-install%2Cwin-user-install%2Credhat-install%2CmacOS-uninstall%2Credhat-uninstall

@@ -1,32 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shinobi.Core.Models;
-using Shinobi.Core.Models.Config;
 
 namespace Shinobi.Core.Data;
 
-public class ShinobiContext : DbContext
+public class ShinobiDbContext : DbContext
 {
-    private readonly SqlConnectionDetails _sqlConnectionDetails;
-    
-    public ShinobiContext(SqlConnectionDetails sqlConnectionDetails)
-    {
-        _sqlConnectionDetails = sqlConnectionDetails;
-    }
-
-    public ShinobiContext(DbContextOptions<ShinobiContext> options, SqlConnectionDetails sqlConnectionDetails)
+    public ShinobiDbContext(DbContextOptions<ShinobiDbContext> options)
         : base(options)
     {
-        _sqlConnectionDetails = sqlConnectionDetails;
     }
 
     public virtual DbSet<Ninja> Ninja { get; set; }
 
     public virtual DbSet<Skill> Skill { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer($"Server={_sqlConnectionDetails.Server}; Initial Catalog={_sqlConnectionDetails.Catalog}; " +
-                                       $"user={_sqlConnectionDetails.UserName};Password={_sqlConnectionDetails.Password};TrustServerCertificate=True;");
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Ninja>(entity =>

@@ -6,34 +6,34 @@ namespace Shinobi.Core.Repositories.Internal;
 
 public class NinjaRepository : INinjaRepository
 {
-    private readonly ShinobiContext _shinobiContext;
+    private readonly ShinobiDbContext _shinobiDbContext;
 
-    public NinjaRepository(ShinobiContext shinobiContext)
+    public NinjaRepository(ShinobiDbContext shinobiDbContext)
     {
-        _shinobiContext = shinobiContext;
+        _shinobiDbContext = shinobiDbContext;
     }
 
     public IList<Ninja> Get()
     {
-        return _shinobiContext.Ninja.IsNullOrEmpty() 
+        return _shinobiDbContext.Ninja.IsNullOrEmpty() 
             ? Enumerable.Empty<Ninja>().ToList() 
-            : _shinobiContext.Ninja.ToList();
+            : _shinobiDbContext.Ninja.ToList();
     }
     
     public Ninja? Get(int id)
     { 
-        return _shinobiContext.Ninja.ToList().FirstOrDefault(ninja => ninja.Id == id) ?? null;;
+        return _shinobiDbContext.Ninja.ToList().FirstOrDefault(ninja => ninja.Id == id) ?? null;;
     }
 
     public void Add(Ninja ninja)
     { 
-        _shinobiContext.Ninja.Add(ninja);
-        _shinobiContext.SaveChanges();
+        _shinobiDbContext.Ninja.Add(ninja);
+        _shinobiDbContext.SaveChanges();
     }
 
     public void Delete(int id)
     {
-        _shinobiContext.Ninja.Remove(_shinobiContext.Ninja.Single(ninja => ninja.Id == id));
-        _shinobiContext.SaveChanges();
+        _shinobiDbContext.Ninja.Remove(_shinobiDbContext.Ninja.Single(ninja => ninja.Id == id));
+        _shinobiDbContext.SaveChanges();
     }
 }

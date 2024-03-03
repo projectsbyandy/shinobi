@@ -10,7 +10,7 @@ public class INinjaRepositoryMock
     public static INinjaRepository GetMock(NinjaMockOptions ninjaMockOptions)
     {
         var ninjas = GenerateTestData(ninjaMockOptions);
-        var dbContextMock = DbContextMock.GetMock<Ninja, ShinobiContext>(ninjas, x => x.Ninja);
+        var dbContextMock = DbContextMock.GetMock<Ninja, ShinobiDbContext>(ninjas, x => x.Ninja);
         return new NinjaRepository(dbContextMock);
     }
 

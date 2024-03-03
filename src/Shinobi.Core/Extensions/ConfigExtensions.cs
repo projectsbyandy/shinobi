@@ -7,7 +7,7 @@ public static class ConfigExtensions
 {
     public static IServiceCollection AddConfigurationSupport(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        var sqlConnectionDetails = configuration.GetSection("SqlConnectionDetails").Get<SqlConnectionDetails>();
+        var sqlConnectionDetails = configuration.GetSection("DbConfiguration").Get<DbConfiguration>();
 
         Guard.Against.Null(sqlConnectionDetails);
         
