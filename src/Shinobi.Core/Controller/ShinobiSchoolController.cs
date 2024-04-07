@@ -10,9 +10,9 @@ namespace Shinobi.Core.Controller;
 public class ShinobiSchoolController : ControllerBase
 {
     private readonly INinjaRepository _ninjaRepository;
-    private readonly ILogger<ShinobiSchoolController> _logger;
+    private readonly ILogger _logger;
     
-    public ShinobiSchoolController(INinjaRepository ninjaRepository, ILogger<ShinobiSchoolController> logger)
+    public ShinobiSchoolController(INinjaRepository ninjaRepository, ILogger logger)
     {
         _ninjaRepository = ninjaRepository;
         _logger = logger;

@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlSetup", "SqlSetup", "{8B
 		..\sql\DatabaseSetupScripts.sql = ..\sql\DatabaseSetupScripts.sql
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shinobi.FunctionApp", "Shinobi.FunctionApp\Shinobi.FunctionApp.csproj", "{57F83866-D125-44C6-80F4-34D727E70E98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +25,9 @@ Global
 		{5E89C980-8ED7-49C6-960B-FE5280DCC5C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E89C980-8ED7-49C6-960B-FE5280DCC5C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E89C980-8ED7-49C6-960B-FE5280DCC5C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57F83866-D125-44C6-80F4-34D727E70E98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57F83866-D125-44C6-80F4-34D727E70E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57F83866-D125-44C6-80F4-34D727E70E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57F83866-D125-44C6-80F4-34D727E70E98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
