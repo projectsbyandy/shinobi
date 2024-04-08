@@ -1,16 +1,22 @@
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Serilog;
-
-var logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
-    .WriteTo.Console()
-    .CreateLogger();
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
-    .ConfigureServices((context, services) => 
-        services.AddSingleton<ILogger>(logger))
+    .ConfigureLogging(configure =>
+    {
+        configure
+            .ClearProviders()
+            .Services
+            .AddSerilog(
+                new LoggerConfiguration()
+                    .MinimumLevel.Debug()
+                    .WriteTo.Console()
+                    .CreateLogger());
+    })
+    .ConfigureOpenApi()
     .Build();
 
 host.Run();
