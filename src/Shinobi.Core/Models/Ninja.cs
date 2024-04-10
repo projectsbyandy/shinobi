@@ -10,11 +10,7 @@ public record Ninja(string FirstName, string LastName)
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [SwaggerSchema(ReadOnly = true)]
     public int Id { get; set; }
-
-    [Required(ErrorMessage = "Last name is required")]
     public string LastName { get; set; } = LastName;
-
-    [Required(ErrorMessage = "First name is required")]
     public string FirstName { get; set; } = FirstName;
 
     [Required]

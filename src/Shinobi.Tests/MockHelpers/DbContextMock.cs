@@ -11,8 +11,7 @@ public class DbContextMock
     {
         var lstDataQueryable = listData.AsQueryable();
         var dbSetMock = new Mock<DbSet<TData>>();
-        var sqlConnectionDetails = new Mock<SqlConnectionDetails>();
-        var dbContext = new Mock<TContext>(sqlConnectionDetails.Object);
+        var dbContext = new Mock<TContext>();
         
         dbSetMock.As<IQueryable<TData>>().Setup(s => s.Provider).Returns(lstDataQueryable.Provider);
         dbSetMock.As<IQueryable<TData>>().Setup(s => s.Expression).Returns(lstDataQueryable.Expression);

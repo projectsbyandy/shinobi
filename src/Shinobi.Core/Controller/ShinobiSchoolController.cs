@@ -12,7 +12,7 @@ public class ShinobiSchoolController : ControllerBase
     private readonly INinjaRepository _ninjaRepository;
     private readonly ILogger _logger;
     
-    public ShinobiSchoolController(INinjaRepository ninjaRepository, ILogger logger)
+    public ShinobiSchoolController(INinjaRepository ninjaRepository, ILogger<ShinobiSchoolController> logger)
     {
         _ninjaRepository = ninjaRepository;
         _logger = logger;
@@ -42,7 +42,7 @@ public class ShinobiSchoolController : ControllerBase
             : Ok(locatedNinja);    
     }
     
-    [HttpPost]
+    [HttpPost(Name = "RegisterNinja")]
     public IActionResult Register(Ninja ninja)
     {
         if (NinjaExists(ninja.FirstName, ninja.LastName))
@@ -58,7 +58,7 @@ public class ShinobiSchoolController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, "Unable to Register Ninja");
         }
 
-        return CreatedAtAction(nameof(Get), 
+        return CreatedAtRoute("RegisterNinja", 
             new { ninjaId = ninja.Id }, ninja);
     }
 

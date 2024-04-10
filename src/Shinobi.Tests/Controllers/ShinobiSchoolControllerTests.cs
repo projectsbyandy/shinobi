@@ -166,7 +166,7 @@ public class ShinobiSchoolControllerTests
         var response = _sut?.Register(referenceNinja);
         
         // Then
-        response.Should().BeOfType<CreatedAtActionResult>();
+        response.Should().BeOfType<CreatedAtRouteResult>();
         var createdAtActionResult = response as CreatedAtActionResult;
 
         createdAtActionResult?.StatusCode.Should().Be(201);

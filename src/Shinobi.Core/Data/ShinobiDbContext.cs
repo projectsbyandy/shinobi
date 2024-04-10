@@ -1,12 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shinobi.Core.Models;
+using Shinobi.Core.Models.Config;
 
 namespace Shinobi.Core.Data;
 
 public class ShinobiDbContext : DbContext
-{
+{ 
     public ShinobiDbContext(DbContextOptions<ShinobiDbContext> options)
         : base(options)
+    {
+    }
+    
+    public ShinobiDbContext()
     {
     }
 
