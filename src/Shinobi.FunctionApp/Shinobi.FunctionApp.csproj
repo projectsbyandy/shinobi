@@ -7,12 +7,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.OpenApi" Version="1.5.1" />
-        <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.OpenApi" Version="1.0.0" />
+        <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.OpenApi" Version="2.0.0-preview2" />
+        <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.OpenApi" Version="2.0.0-preview2" />
         <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0"/>
-        <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.19.0"/>
+        <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.21.0" />
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.1.0"/>
-        <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.15.1"/>
+        <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.17.3-preview1" />
         <PackageReference Include="Serilog" Version="4.0.0-dev-02149" />
         <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.1-dev-10389" />
