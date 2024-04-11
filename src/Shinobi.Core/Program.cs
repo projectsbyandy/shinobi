@@ -1,5 +1,6 @@
 using Ardalis.GuardClauses;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Shinobi.Core.Data;
 using Shinobi.Core.Extensions;
 using Shinobi.Core.Models.Config;
@@ -18,7 +19,8 @@ var config = ConfigExtensions.GetConfiguration();
 var dbConfiguration = config.GetSection("DbConfiguration").Get<DbConfiguration>();
 Guard.Against.Null(dbConfiguration?.SqlConnectionDetails);
 
-builder.Logging.ClearProviders().AddConsole();
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddTransient<INinjaRepository, NinjaRepository>();
 builder.Services.AddDbContext<ShinobiDbContext>(options =>

@@ -1,11 +1,11 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Moq;
 using Shinobi.Core.Controller;
 using Shinobi.Core.Models;
 using Shinobi.Core.Repositories;
+using Serilog;
 
 namespace Shinobi.Tests.Controllers;
 
@@ -13,7 +13,7 @@ public class ShinobiSchoolControllerTests
 {
     private ShinobiSchoolController? _sut;
     private Mock<INinjaRepository>? _repositoryMock;
-    private IMock<ILogger<ShinobiSchoolController>>? _loggerMock;
+    private IMock<ILogger>? _loggerMock;
     private readonly Ninja _existingNinja = new Ninja("Robson", "Etchfield")
     {
         Id = 1,
@@ -24,7 +24,7 @@ public class ShinobiSchoolControllerTests
     public void Setup()
     {
         _repositoryMock = new Mock<INinjaRepository>();
-        _loggerMock = new Mock<ILogger<ShinobiSchoolController>>();
+        _loggerMock = new Mock<ILogger>();
         
         _repositoryMock?.Setup(repository => repository.Get()).Returns([]);
         _repositoryMock?.Setup(repository => repository.Get(1)).Returns(

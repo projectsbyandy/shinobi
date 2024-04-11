@@ -2,6 +2,7 @@ using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Mvc;
 using Shinobi.Core.Models;
 using Shinobi.Core.Repositories;
+using ILogger = Serilog.ILogger;
 
 namespace Shinobi.Core.Controller;
 
@@ -12,7 +13,7 @@ public class ShinobiSchoolController : ControllerBase
     private readonly INinjaRepository _ninjaRepository;
     private readonly ILogger _logger;
     
-    public ShinobiSchoolController(INinjaRepository ninjaRepository, ILogger<ShinobiSchoolController> logger)
+    public ShinobiSchoolController(INinjaRepository ninjaRepository, ILogger logger)
     {
         _ninjaRepository = ninjaRepository;
         _logger = logger;
@@ -54,7 +55,7 @@ public class ShinobiSchoolController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError("Problem registering Ninja due to {Ex}", ex);
+            _logger.Error("Problem registering Ninja due to {@Ex}", ex);
             return StatusCode(StatusCodes.Status500InternalServerError, "Unable to Register Ninja");
         }
 
