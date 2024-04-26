@@ -1,7 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using Shinobi.Core.Models.Config;
 
 namespace Shinobi.Tests.MockHelpers;
 

@@ -8,9 +8,9 @@ public class FakerNinja : Faker<Ninja>
     {
         var id = 1;
 
-        UseSeed(1000)
+        UseSeed(id)
             .CustomInstantiator(f => new Ninja(f.Person.FirstName, f.Person.LastName))
-            .RuleFor(c => c.Id, _ => id++)
-            .RuleFor(c => c.Level, f => --id);
+            .RuleFor(c => c.Id, f => f.IndexFaker++)
+            .RuleFor(c => c.Level, f => --f.IndexFaker);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shinobi.Core.Models;
-using Shinobi.Core.Models.Config;
 
 namespace Shinobi.Core.Data;
 
