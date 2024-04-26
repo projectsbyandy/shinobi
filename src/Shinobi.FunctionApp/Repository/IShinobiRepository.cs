@@ -4,6 +4,7 @@ namespace Shinobi.FunctionApp.Repository;
 
 public interface IShinobiRepository
 {
-    public Ninja GetNinjaWith(int id);
+    public Ninja? GetNinjaWith(int id);
     public IEnumerable<Ninja> GetNinjas();
+    public IEnumerable<Ninja> Seed(int numberOfNinjas);
 }

@@ -2,15 +2,13 @@ using Bogus;
 
 namespace Shinobi.Core.Models.Faker;
 
-public class FakerNinja : Faker<Ninja>
+public sealed class FakerNinja : Faker<Ninja>
 {
-    public FakerNinja()
+    public FakerNinja(int i)
     {
-        var id = 1;
-
-        UseSeed(id)
+        UseSeed(2312313)
             .CustomInstantiator(f => new Ninja(f.Person.FirstName, f.Person.LastName))
-            .RuleFor(c => c.Id, f => f.IndexFaker++)
-            .RuleFor(c => c.Level, f => --f.IndexFaker);
+            .RuleFor(c => c.Id, f => f.IndexGlobal )
+            .RuleFor(c => c.Level, f => f.IndexGlobal );
     }
 }

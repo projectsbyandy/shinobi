@@ -1,4 +1,6 @@
+using System.Net;
 using Shinobi.Core.Models;
+using Shinobi.FunctionApp.Models;
 using Shinobi.FunctionApp.Repository;
 
 namespace Shinobi.FunctionApp.Services.Internal;
@@ -12,13 +14,35 @@ public class ShinobiService : IShinobiService
         _shinobiRepository = shinobiRepository;
     }
 
-    public Ninja Get(int id)
+    public ShinobiServiceResponse<Ninja> Get(int id)
     {
-        return _shinobiRepository.GetNinjaWith(id);
+        var ninja = _shinobiRepository.GetNinjaWith(id);
+
+        if (ninja is null)
+            return new ShinobiServiceResponse<Ninja>(HttpStatusCode.NotFound)
+            {
+                Message = "Ninja was not found"
+            };
+        
+        return new ShinobiServiceResponse<Ninja>(HttpStatusCode.OK)
+        {
+            Data = ninja
+        };
     }
     
-    public IEnumerable<Ninja> GetAll()
+    public ShinobiServiceResponse<IEnumerable<Ninja>> GetAll()
     {
-        return _shinobiRepository.GetNinjas();
+        return new ShinobiServiceResponse<IEnumerable<Ninja>>(HttpStatusCode.OK)
+        {
+            Data = _shinobiRepository.GetNinjas()
+        };
+    }
+
+    public ShinobiServiceResponse<IEnumerable<Ninja>> Seed(int numberOfNinjas)
+    {
+        return new ShinobiServiceResponse<IEnumerable<Ninja>>(HttpStatusCode.Created)
+        {
+            Data = _shinobiRepository.Seed(numberOfNinjas)
+        };
     }
 }
