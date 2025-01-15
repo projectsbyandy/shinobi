@@ -23,6 +23,7 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddTransient<INinjaRepository, NinjaRepository>();
+//builder.Services.AddTransient<INinjaRepository, FakeMongoRepository>();
 builder.Services.AddDbContext<ShinobiDbContext>(options =>
 {
     if (dbConfiguration.UseMock)
@@ -52,6 +53,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//app.Services.GetService<INinjaRepository>();
 
 app.UseHttpsRedirection();
 app.MapControllers();

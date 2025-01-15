@@ -10,13 +10,13 @@
         <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.OpenApi" Version="2.0.0-preview2" />
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.OpenApi" Version="2.0.0-preview2" />
         <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0"/>
-        <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.21.0" />
-        <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.1.0"/>
-        <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.17.3-preview1" />
-        <PackageReference Include="Serilog" Version="4.0.0-dev-02149" />
+        <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.23.0" />
+        <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.2.0" />
+        <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.17.4" />
+        <PackageReference Include="Serilog" Version="4.0.1" />
         <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.1-dev-10389" />
-        <PackageReference Include="Serilog.Sinks.Console" Version="5.1.0-dev-00943" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     </ItemGroup>
     <ItemGroup>
         <None Update="host.json">
@@ -25,6 +25,9 @@
         <None Update="local.settings.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+        </None>
+        <None Update="Ninja.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>
     <ItemGroup>
